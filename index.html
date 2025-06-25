@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meter Tracker - Electricity Usage Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-right">
+                    <div class="app-logo">
+                        <i class="fas fa-bolt"></i>
+                        <span>Meter Tracker</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <a href="https://github.com" class="github-link" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Calculator Section -->
+            <section class="calculator-section">
+                <h1>Electricity Usage Calculator</h1>
+                <p class="section-description">Calculate your electricity consumption and costs based on meter readings.</p>
+                
+                <form id="calculatorForm" class="calculator-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="previousReading">Previous Reading (kWh)</label>
+                            <input type="number" id="previousReading" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="previousDate">Previous Date</label>
+                            <input type="date" id="previousDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="currentReading">Current Reading (kWh)</label>
+                            <input type="number" id="currentReading" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="currentDate">Current Date</label>
+                            <input type="date" id="currentDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ratePerUnit">Rate per Unit (₹/kWh)</label>
+                            <input type="number" id="ratePerUnit" step="0.01" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Calculate Usage</button>
+                        <button type="button" id="resetBtn" class="btn btn-secondary">Reset</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <h2>Usage Summary</h2>
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="result-content">
+                            <h3>Total Units Consumed</h3>
+                            <p id="totalUnits" class="result-value">0 kWh</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="result-content">
+                            <h3>Total Cost</h3>
+                            <p id="totalCost" class="result-value">₹0.00</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="result-content">
+                            <h3>Daily Average</h3>
+                            <p id="dailyUsage" class="result-value">0 kWh</p>
+                            <p id="dailyCost" class="result-cost">₹0.00/day</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <div class="result-content">
+                            <h3>Weekly Estimate</h3>
+                            <p id="weeklyUsage" class="result-value">0 kWh</p>
+                            <p id="weeklyCost" class="result-cost">₹0.00/week</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="result-content">
+                            <h3>Monthly Estimate</h3>
+                            <p id="monthlyUsage" class="result-value">0 kWh</p>
+                            <p id="monthlyCost" class="result-cost">₹0.00/month</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card period-info">
+                        <div class="result-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="result-content">
+                            <h3>Billing Period</h3>
+                            <p id="billingPeriod" class="result-value">0 days</p>
+                            <div id="billingBreakdown" class="billing-breakdown">
+                                <!-- Breakdown will go here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ad Space -->
+            <div class="ad-space">
+                <p class="ad-placeholder">Advertisement Space</p>
+            </div>
+
+            <!-- Mobile App Promotion -->
+            <section class="app-promotion">
+                <div class="promotion-content">
+                    <div class="promotion-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="promotion-text">
+                        <h2>Get the Meter Tracker Mobile App</h2>
+                        <p>Experience enhanced features including auto-tracking, detailed usage trends, interactive graphs, smart notifications, and offline support. The ultimate electricity monitoring experience is coming to your mobile device!</p>
+                        <div class="app-download-section">
+                            <button class="btn btn-download" id="downloadApp">
+                                <i class="fas fa-download"></i>
+                                Download App (Coming Soon)
+                            </button>
+                            <p class="download-note">Be the first to know when it's available!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>Made with <i class="fas fa-heart"></i> by Sabir Mallick</p>
+                <div class="footer-links">
+                    <a href="https://buymeacoffee.com/developer" target="_blank" class="coffee-link">
+                        <i class="fas fa-coffee"></i>
+                        Buy me a coffee
+                    </a>
+                    <a href="https://github.com" target="_blank" class="other-link">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="other-link">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn
+                    </a>
+                    <a href="#" target="_blank" class="other-link">
+                        <i class="fas fa-globe"></i>
+                        Website
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
